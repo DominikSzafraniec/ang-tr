@@ -13,7 +13,6 @@ export class EventService {
   }
 
   getEvents(): Observable<Array<Event>> {
-    console.log('pierdol sie Summer');
     return this.http.get<Array<Event>>('http://localhost:8080/events');
   }
 
@@ -32,7 +31,7 @@ export class EventService {
   }
 
   deleteEvent(id: number): Observable<Array<Event>> {
-    return this.http.delete<Array<Event>>('http://localhost:8080/events/delete/' + id);
+    return this.http.delete<Array<Event>>('http://localhost:8080/events/' + id);
   }
 
   updateEvent(event: Event) {

@@ -45,7 +45,7 @@ export class EventComponent implements OnInit {
     }
 
   addEvent(): void {
-    this.sendEvent.id = 1;
+    this.sendEvent.id = null;
     this.sendEvent.name = this.name;
     this.sendEvent.description = this.description;
     this.sendEvent.ticketAvailable = this.ticketAvailable;
@@ -74,7 +74,6 @@ export class EventComponent implements OnInit {
 
 
   ngOnInit() {
-    this.roleStorage = (JSON.parse(localStorage.getItem('loggedUser'))).role;
     this.sendEvent = new Event();
 
     this.eventService.getEvents().subscribe(events => {
@@ -82,7 +81,7 @@ export class EventComponent implements OnInit {
     });
 
     this.firstFormGroup = this._formBuilder.group({
-      id: 1,
+      id: 0,
       name: [''],
       description: [''],
       ticketAvailable: [''],

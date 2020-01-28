@@ -37,6 +37,14 @@
       </tr>
       <tr *ngFor="let d of events">
         <td>{{d.name}}</td>
+        <td>{{d.description}}</td>
+        <td>{{d.ticketAvailable}}</td>
+        <td>{{d.ticketTotal}}</td>
+        <td>{{d.date}}</td>
+        <td>{{d.place}}</td>
+        <td>{{d.eventType}}</td>
+        <td>{{d.normalTicketPrice}}</td>
+        <td>{{d.discountTicketPrice}}</td>
         <td>
           <button mat-raised-button color="primary" (click)="deleteEvent(d.id)"> Usun</button>
         </td>
