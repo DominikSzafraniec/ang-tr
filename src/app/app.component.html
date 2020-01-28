@@ -1,0 +1,19 @@
+<mat-toolbar color="primary">
+
+  <span class="example-spacer"></span>
+
+  <button [disabled]="myDisabled" mat-button [matMenuTriggerFor]="appMenu">
+    <mat-icon>Menu</mat-icon>
+  </button>
+  <button [disabled]="myDisabled" mat-button (click)="logoutFunc()">Wyloguj</button>
+</mat-toolbar>
+
+<h1 align="center">Rezerwacje biletowe</h1>
+<br>
+
+<mat-menu #appMenu="matMenu">
+  <button mat-menu-item (click)="eventsPage()"> Events</button>
+</mat-menu>
+
+
+<router-outlet></router-outlet>

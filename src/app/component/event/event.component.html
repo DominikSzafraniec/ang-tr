@@ -1,0 +1,110 @@
+<div *ngIf="roleStorage=='admin'">
+  <table>
+    <td>
+      <button mat-raised-button color="primary" (click)="pageShowed('read',null)">Wyswietl wydarzenia</button>
+    </td>
+  </table>
+
+  <div *ngIf="showEventPage=='read'">
+    <table>
+      <tr>
+        <td>Tytuł </td>
+      </tr>
+      <tr *ngFor="let d of events">
+        <td>{{d.name}}</td>
+        <td>
+          <button mat-raised-button color="primary" (click)="deleteEvent(d.id)"> Usun</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div *ngIf="'user'=='user'">
+  <table>
+    <td>
+      <button mat-raised-button color="primary" (click)="pageShowed('read',null)">Wyswietl wydarzenia</button>
+    </td>
+    <td>
+      <button mat-raised-button color="primary" (click)="pageShowed('add',null)">Dodaj eydarzenia</button>
+    </td>
+  </table>
+
+  <div *ngIf="showEventPage=='read'">
+    <table>
+      <tr>
+        <td>Seans</td>
+      </tr>
+      <tr *ngFor="let d of events">
+        <td>{{d.name}}</td>
+        <td>
+          <button mat-raised-button color="primary" (click)="deleteEvent(d.id)"> Usun</button>
+        </td>
+        <td>
+          <button mat-raised-button color="primary" (click)="pageShowed('edit',null)"> Edytuj</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+  <div *ngIf="showEventPage=='add'">
+    <form [formGroup]="firstFormGroup">
+
+      <mat-form-field>
+        <input matInput placeholder="Wpisz nazwę seansu" formControlName="name" [(ngModel)]="name">
+      </mat-form-field>
+
+      <table>
+        <tr>
+          <td>Opis</td>
+          <td>Pula biletów</td>
+          <td>Data</td>
+          <td>Miejsce seansu</td>
+          <td>Gatunek</td>
+          <td>Cena biletu</td>
+          <td>Cena biletu ze znizka</td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="" formControlName="description" [(ngModel)]="description">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="" formControlName="ticketTotal" [(ngModel)]="ticketTotal">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="" formControlName="date" [(ngModel)]="date">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="" formControlName="place" [(ngModel)]="place">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="" formControlName="eventType" [(ngModel)]="eventType">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="" formControlName="normalTicketPrice" [(ngModel)]="normalTicketPrice">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="" formControlName="discountTicketPrice" [(ngModel)]="discountTicketPrice">
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+      <br>
+    </form>
+    <button mat-raised-button color="primary" (click)="addEvent()"> Dodaj seans</button>
+  </div>
+</div>
