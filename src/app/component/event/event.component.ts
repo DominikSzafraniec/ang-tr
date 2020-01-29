@@ -18,8 +18,8 @@ export class EventComponent implements OnInit {
   id: number;
   name: string;
   description: string;
-  ticketAvailable: number;
-  ticketTotal: number;
+  ticketsAvailable: number;
+  ticketsTotal: number;
   date: Date;
   place: string;
   eventType: string;
@@ -48,16 +48,17 @@ export class EventComponent implements OnInit {
     this.sendEvent.id = null;
     this.sendEvent.name = this.name;
     this.sendEvent.description = this.description;
-    this.sendEvent.ticketAvailable = this.ticketAvailable;
-    this.sendEvent.ticketTotal = this.ticketTotal;
+    this.sendEvent.ticketsAvailable = this.ticketsAvailable;
+    this.sendEvent.ticketsTotal = this.ticketsTotal;
     this.sendEvent.date = this.date;
     this.sendEvent.place = this.place;
     this.sendEvent.eventType = this.eventType;
     this.sendEvent.normalTicketPrice = this.normalTicketPrice;
     this.sendEvent.discountTicketPrice = this.discountTicketPrice;
-    console.log('this.sendEvent');
     console.log(this.sendEvent);
     console.log(JSON.stringify(this.eventService.addEvent(this.sendEvent)));
+    this.sendEvent = null;
+    this.firstFormGroup.reset();
   }
 
   updateEvent(event: Event) {
@@ -84,13 +85,13 @@ export class EventComponent implements OnInit {
       id: 0,
       name: [''],
       description: [''],
-      ticketAvailable: [''],
-      ticketTotal: [''],
-      date: Date,
+      ticketsAvailable: 0,
+      ticketsTotal: 0,
+      date: Date.now(),
       place: [''],
       eventType: [''],
-      normalTicketPrice: [''],
-      discountTicketPrice: ['']
+      normalTicketPrice: 0,
+      discountTicketPrice: 0
     });
   }
 

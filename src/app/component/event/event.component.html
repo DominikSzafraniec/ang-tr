@@ -1,7 +1,7 @@
 <div *ngIf="roleStorage=='admin'">
   <table>
     <td>
-      <button mat-raised-button color="primary" (click)="pageShowed('read',null)">Wyswietl wydarzenia</button>
+      <button mat-raised-button color="primary" (click)="pageShowed('read',null)">Wyswietl seanse</button>
     </td>
   </table>
 
@@ -23,10 +23,10 @@
 <div *ngIf="'user'=='user'">
   <table>
     <td>
-      <button mat-raised-button color="primary" (click)="pageShowed('read',null)">Wyswietl wydarzenia</button>
+      <button mat-raised-button color="primary" (click)="pageShowed('read',null)">Wyswietl seanse</button>
     </td>
     <td>
-      <button mat-raised-button color="primary" (click)="pageShowed('add',null)">Dodaj eydarzenia</button>
+      <button mat-raised-button color="primary" (click)="pageShowed('add',null)">Dodaj seans</button>
     </td>
   </table>
 
@@ -34,12 +34,18 @@
     <table>
       <tr>
         <td>Seans</td>
+        <td>Opis</td>
+        <td>Dostepne bilety</td>
+        <td>Data</td>
+        <td>Miejsce seansu</td>
+        <td>Gatunek</td>
+        <td>Cena normalna</td>
+        <td>Cena ulgowa</td>
       </tr>
       <tr *ngFor="let d of events">
         <td>{{d.name}}</td>
         <td>{{d.description}}</td>
-        <td>{{d.ticketAvailable}}</td>
-        <td>{{d.ticketTotal}}</td>
+        <td>{{d.ticketsAvailable}}</td>
         <td>{{d.date}}</td>
         <td>{{d.place}}</td>
         <td>{{d.eventType}}</td>
@@ -81,7 +87,7 @@
           </td>
           <td>
             <mat-form-field>
-              <input matInput placeholder="" formControlName="ticketTotal" [(ngModel)]="ticketTotal">
+              <input matInput placeholder="" formControlName="ticketTotal" [(ngModel)]="ticketsTotal">
             </mat-form-field>
           </td>
           <td>
@@ -113,6 +119,6 @@
       </table>
       <br>
     </form>
-    <button mat-raised-button color="primary" (click)="addEvent()"> Dodaj seans</button>
+    <button mat-raised-button color="primary" (click)="addEvent()" > Dodaj seans</button>
   </div>
 </div>

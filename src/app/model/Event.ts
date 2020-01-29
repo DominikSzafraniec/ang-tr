@@ -2,8 +2,8 @@ export class Event {
   id: number;
   name: string;
   description: string;
-  ticketAvailable: number;
-  ticketTotal: number;
+  ticketsAvailable: number;
+  ticketsTotal: number;
   date: Date;
   place: string;
   eventType: string;
