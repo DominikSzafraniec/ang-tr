@@ -5,15 +5,15 @@
   <button [disabled]="myDisabled" mat-button [matMenuTriggerFor]="appMenu">
     <mat-icon>menu</mat-icon>
   </button>
-  <button [disabled]="myDisabled" mat-button (click)="logoutFunc()">Wyloguj</button>
 </mat-toolbar>
 
 <h1 align="center">System biletowy</h1>
 <br>
 
 <mat-menu #appMenu="matMenu">
+  <button mat-menu-item (click)="startPage()"> Start</button>
   <button mat-menu-item (click)="eventsPage()"> Events</button>
-</mat-menu>
 
+</mat-menu>
 
 <router-outlet></router-outlet>

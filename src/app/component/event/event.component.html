@@ -1,4 +1,4 @@
-<div *ngIf="roleStorage=='admin'">
+<div *ngIf="roleStorage=='user'">
   <table>
     <td>
       <button mat-raised-button color="primary" (click)="pageShowed('read',null)">Wyswietl seanse</button>
@@ -8,19 +8,30 @@
   <div *ngIf="showEventPage=='read'">
     <table>
       <tr>
-        <td>Tytuł </td>
+        <td>Seans</td>
+        <td>Opis</td>
+        <td>Dostepne bilety</td>
+        <td>Data</td>
+        <td>Miejsce seansu</td>
+        <td>Gatunek</td>
+        <td>Cena normalna</td>
+        <td>Cena ulgowa</td>
       </tr>
       <tr *ngFor="let d of events">
         <td>{{d.name}}</td>
-        <td>
-          <button mat-raised-button color="primary" (click)="deleteEvent(d.id)"> Usun</button>
-        </td>
+        <td>{{d.description}}</td>
+        <td>{{d.ticketsAvailable}}</td>
+        <td>{{d.date}}</td>
+        <td>{{d.place}}</td>
+        <td>{{d.eventType}}</td>
+        <td>{{d.normalTicketPrice}}</td>
+        <td>{{d.discountTicketPrice}}</td>
       </tr>
     </table>
   </div>
 </div>
 
-<div *ngIf="'user'=='user'">
+<div *ngIf="roleStorage=='admin'">
   <table>
     <td>
       <button mat-raised-button color="primary" (click)="pageShowed('read',null)">Wyswietl seanse</button>
@@ -55,7 +66,7 @@
           <button mat-raised-button color="primary" (click)="deleteEvent(d.id)"> Usun</button>
         </td>
         <td>
-          <button mat-raised-button color="primary" (click)="pageShowed('edit',null)"> Edytuj</button>
+          <button mat-raised-button color="primary" (click)="pageShowed('edit',d)"> Edytuj</button>
         </td>
       </tr>
     </table>
@@ -87,7 +98,7 @@
           </td>
           <td>
             <mat-form-field>
-              <input matInput placeholder="" formControlName="ticketTotal" [(ngModel)]="ticketsTotal">
+              <input matInput placeholder="" formControlName="ticketsTotal" [(ngModel)]="ticketsTotal">
             </mat-form-field>
           </td>
           <td>
@@ -120,5 +131,64 @@
       <br>
     </form>
     <button mat-raised-button color="primary" (click)="addEvent()" > Dodaj seans</button>
+  </div>
+  <div *ngIf="showEventPage=='edit'">
+    <form [formGroup]="firstFormGroup">
+
+      <mat-form-field>
+        <input matInput placeholder="{{name}}" formControlName="name" [(ngModel)]="name">
+      </mat-form-field>
+
+      <table>
+        <tr>
+          <td>Opis</td>
+          <td>Pula biletów</td>
+          <td>Data</td>
+          <td>Miejsce seansu</td>
+          <td>Gatunek</td>
+          <td>Cena biletu</td>
+          <td>Cena biletu ze znizka</td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="{{description}}" formControlName="description" [(ngModel)]="description">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="{{ticketsTotal}}" formControlName="ticketsTotal" [(ngModel)]="ticketsTotal">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="{{date}}" formControlName="date" [(ngModel)]="date">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="{{place}}" formControlName="place" [(ngModel)]="place">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="{{eventType}}" formControlName="eventType" [(ngModel)]="eventType">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="{{normalTicketPrice}}" formControlName="normalTicketPrice" [(ngModel)]="normalTicketPrice">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="{{discountTicketPrice}}" formControlName="discountTicketPrice" [(ngModel)]="discountTicketPrice">
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+      <br>
+    </form>
+    <button mat-raised-button color="primary" (click)="updateEvent(eventEdit)" > Edytuj seans</button>
   </div>
 </div>

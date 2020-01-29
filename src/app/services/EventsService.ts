@@ -15,6 +15,10 @@ export class EventService {
   getEvents(): Observable<Array<Event>> {
     return this.http.get<Array<Event>>('http://localhost:8080/events');
   }
+  getEventsById(id: number): Observable<Array<Event>> {
+    return this.http.get<Array<Event>>('http://localhost:8080/events/' + id);
+  }
+
 
 
   addEvent(event: Event) {
@@ -36,7 +40,7 @@ export class EventService {
 
   updateEvent(event: Event) {
     let update = true;
-    this.http.put('http://localhost:8080/events', JSON.stringify(event),
+    this.http.put('http://localhost:8080/events/' + event.id, JSON.stringify(event),
       {
         headers: {'Content-Type': 'application/json'},
         responseType: 'text'

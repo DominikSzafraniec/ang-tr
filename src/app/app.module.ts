@@ -9,11 +9,14 @@ import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIco
 
 import {EventService} from './services/EventsService';
 import {EventComponent} from './component/event/event.component';
+import {LoginComponent} from './component/login/login.component';
+import {LoginService} from './services/LoginService';
 
 @NgModule({
   declarations: [
     AppComponent,
     EventComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -33,11 +36,16 @@ import {EventComponent} from './component/event/event.component';
       {
         path: 'events',
         component: EventComponent
+      },
+      {
+        path: '',
+        component: LoginComponent
       }
     ])
   ],
   providers: [
     EventService,
+    LoginService
   ],
   bootstrap: [AppComponent]
 })

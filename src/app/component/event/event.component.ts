@@ -7,7 +7,7 @@ import {forEach} from '@angular/router/src/utils/collection';
 import {of} from 'rxjs';
 
 @Component({
-  selector: 'app-declaration',
+  selector: 'app-event',
   templateUrl: './event.component.html',
   styleUrls: ['./event.component.scss']
 })
@@ -28,8 +28,7 @@ export class EventComponent implements OnInit {
 
   events: Array<Event> = [];
   sendEvent: Event;
-
-  editEvent: Event;
+  eventEdit: Event;
   showEventPage: string;
   searchEvents: Array<Event> = [];
   roleStorage: string;
@@ -38,12 +37,31 @@ export class EventComponent implements OnInit {
   }
 
   pageShowed(showedPage: string, event: Event) {
-    this.showEventPage = showedPage;
-    this.eventService.getEvents().subscribe(events => {
-      this.events = events;
-    });
+      if ( showedPage === 'edit') {
+        this.showEventPage = showedPage;
+        this.editEvent(event);
+      } else {
+        this.showEventPage = showedPage;
+        this.eventService.getEvents().subscribe(events => {
+          this.events = events;
+        });
+      }
     }
-
+    editEvent(event: Event) {
+      this.eventEdit = event;
+      this.firstFormGroup = this._formBuilder.group({
+      id: event.id,
+      name: event.name,
+      description: event.description,
+      ticketsAvailable: event.ticketsAvailable,
+      ticketsTotal: event.ticketsTotal,
+      date: event.date,
+      place: event.place,
+      eventType: event.eventType,
+      normalTicketPrice: event.normalTicketPrice,
+      discountTicketPrice: event.discountTicketPrice
+    });
+  }
   addEvent(): void {
     this.sendEvent.id = null;
     this.sendEvent.name = this.name;
@@ -58,25 +76,50 @@ export class EventComponent implements OnInit {
     console.log(this.sendEvent);
     console.log(JSON.stringify(this.eventService.addEvent(this.sendEvent)));
     this.sendEvent = null;
-    this.firstFormGroup.reset();
+    this.clearForm();
   }
 
   updateEvent(event: Event) {
-
+    this.sendEvent.id = this.id;
+    this.sendEvent.name = this.name;
+    this.sendEvent.description = this.description;
+    this.sendEvent.ticketsAvailable = this.ticketsAvailable;
+    this.sendEvent.ticketsTotal = this.ticketsTotal;
+    this.sendEvent.date = this.date;
+    this.sendEvent.place = this.place;
+    this.sendEvent.eventType = this.eventType;
+    this.sendEvent.normalTicketPrice = this.normalTicketPrice;
+    this.sendEvent.discountTicketPrice = this.discountTicketPrice;
+    console.log(this.eventService.updateEvent(this.sendEvent));
+    this.pageShowed('read', null);
   }
 
   deleteEvent(id: number) {
     this.eventService.deleteEvent(id).subscribe(events => {
-      this.events = events;
       this.searchEvents = events;
     });
-    console.log(this.sendEvent);
+    this.pageShowed('read', null);
+  }
+
+  clearForm() {
+    this.firstFormGroup = this._formBuilder.group({
+      id: 0,
+      name: [''],
+      description: [''],
+      ticketsAvailable: 0,
+      ticketsTotal: 0,
+      date: Date.now(),
+      place: [''],
+      eventType: [''],
+      normalTicketPrice: 0,
+      discountTicketPrice: 0
+    });
   }
 
 
   ngOnInit() {
     this.sendEvent = new Event();
-
+    this.roleStorage = (JSON.parse(localStorage.getItem('loggedUser'))).role;
     this.eventService.getEvents().subscribe(events => {
       this.events = events;
     });

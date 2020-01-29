@@ -12,15 +12,12 @@ export class AppComponent implements OnInit {
 
   constructor(private  router: Router) {
   }
+  startPage(): void {
+    this.router.navigateByUrl('/');
+  }
   eventsPage(): void {
     this.router.navigateByUrl('/events');
   }
-
-  logoutFunc(): void {
-    localStorage.setItem('loggedUser', null);
-    this.router.navigateByUrl('');
-  }
-
 
   ngOnInit() {
     this.myDisabled = false;
