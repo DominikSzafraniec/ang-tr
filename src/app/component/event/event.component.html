@@ -77,7 +77,7 @@
     <form [formGroup]="firstFormGroup">
 
       <mat-form-field>
-        <input matInput placeholder="Wpisz nazwę seansu" formControlName="name" [(ngModel)]="name">
+        <input matInput placeholder="Wpisz nazwę seansu" formControlName="name" >
       </mat-form-field>
 
       <table>
@@ -93,50 +93,50 @@
         <tr>
           <td>
             <mat-form-field>
-              <input matInput placeholder="" formControlName="description" [(ngModel)]="description">
+              <input matInput placeholder="" formControlName="description" >
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
-              <input matInput placeholder="" formControlName="ticketsTotal" [(ngModel)]="ticketsTotal">
+              <input matInput placeholder="" formControlName="ticketsTotal" >
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
-              <input matInput placeholder="" formControlName="date" [(ngModel)]="date">
+              <input matInput placeholder="" formControlName="date" >
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
-              <input matInput placeholder="" formControlName="place" [(ngModel)]="place">
+              <input matInput placeholder="" formControlName="place" >
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
-              <input matInput placeholder="" formControlName="eventType" [(ngModel)]="eventType">
+              <input matInput placeholder="" formControlName="eventType" >
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
-              <input matInput placeholder="" formControlName="normalTicketPrice" [(ngModel)]="normalTicketPrice">
+              <input matInput placeholder="" formControlName="normalTicketPrice" >
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
-              <input matInput placeholder="" formControlName="discountTicketPrice" [(ngModel)]="discountTicketPrice">
+              <input matInput placeholder="" formControlName="discountTicketPrice" >
             </mat-form-field>
           </td>
         </tr>
       </table>
       <br>
     </form>
-    <button mat-raised-button color="primary" (click)="addEvent()" > Dodaj seans</button>
+    <button mat-raised-button color="primary" (click)="addEvent(firstFormGroup.value)" > Dodaj seans</button>
   </div>
   <div *ngIf="showEventPage=='edit'">
     <form [formGroup]="firstFormGroup">
 
       <mat-form-field>
-        <input matInput placeholder="{{name}}" formControlName="name" [(ngModel)]="name">
+        <input matInput placeholder="{{eventEdit.name}}" formControlName="name" >
       </mat-form-field>
 
       <table>
@@ -152,43 +152,43 @@
         <tr>
           <td>
             <mat-form-field>
-              <input matInput placeholder="{{description}}" formControlName="description" [(ngModel)]="description">
+              <input matInput placeholder="{{eventEdit.description}}" formControlName="description" >
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
-              <input matInput placeholder="{{ticketsTotal}}" formControlName="ticketsTotal" [(ngModel)]="ticketsTotal">
+              <input matInput placeholder="{{eventEdit.ticketsTotal}}" formControlName="ticketsTotal" >
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
-              <input matInput placeholder="{{date}}" formControlName="date" [(ngModel)]="date">
+              <input matInput placeholder="{{eventEdit.date}}" formControlName="date" >
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
-              <input matInput placeholder="{{place}}" formControlName="place" [(ngModel)]="place">
+              <input matInput placeholder="{{eventEdit.place}}" formControlName="place">
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
-              <input matInput placeholder="{{eventType}}" formControlName="eventType" [(ngModel)]="eventType">
+              <input matInput placeholder="{{eventEdit.eventType}}" formControlName="eventType" >
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
-              <input matInput placeholder="{{normalTicketPrice}}" formControlName="normalTicketPrice" [(ngModel)]="normalTicketPrice">
+              <input matInput placeholder="{{eventEdit.normalTicketPrice}}" formControlName="normalTicketPrice" >
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
-              <input matInput placeholder="{{discountTicketPrice}}" formControlName="discountTicketPrice" [(ngModel)]="discountTicketPrice">
+              <input matInput placeholder="{{eventEdit.discountTicketPrice}}" formControlName="discountTicketPrice" >
             </mat-form-field>
           </td>
         </tr>
       </table>
       <br>
     </form>
-    <button mat-raised-button color="primary" (click)="updateEvent(eventEdit)" > Edytuj seans</button>
+    <button mat-raised-button color="primary" (click)="updateEvent(firstFormGroup.value)" > Edytuj seans</button>
   </div>
 </div>

@@ -1,4 +1,4 @@
-export class Reservation{
+export class Reservation {
   id: number;
   description: string;
   tickets: string;

@@ -14,18 +14,6 @@ import {of} from 'rxjs';
 export class EventComponent implements OnInit {
 
   firstFormGroup: FormGroup;
-
-  id: number;
-  name: string;
-  description: string;
-  ticketsAvailable: number;
-  ticketsTotal: number;
-  date: Date;
-  place: string;
-  eventType: string;
-  normalTicketPrice: number;
-  discountTicketPrice: number;
-
   events: Array<Event> = [];
   sendEvent: Event;
   eventEdit: Event;
@@ -62,35 +50,37 @@ export class EventComponent implements OnInit {
       discountTicketPrice: event.discountTicketPrice
     });
   }
-  addEvent(): void {
+  addEvent(event: Event): void {
     this.sendEvent.id = null;
-    this.sendEvent.name = this.name;
-    this.sendEvent.description = this.description;
-    this.sendEvent.ticketsAvailable = this.ticketsAvailable;
-    this.sendEvent.ticketsTotal = this.ticketsTotal;
-    this.sendEvent.date = this.date;
-    this.sendEvent.place = this.place;
-    this.sendEvent.eventType = this.eventType;
-    this.sendEvent.normalTicketPrice = this.normalTicketPrice;
-    this.sendEvent.discountTicketPrice = this.discountTicketPrice;
+    this.sendEvent.name = event.name;
+    this.sendEvent.description = event.description;
+    this.sendEvent.ticketsAvailable = event.ticketsAvailable;
+    this.sendEvent.ticketsTotal = event.ticketsTotal;
+    this.sendEvent.date = event.date;
+    this.sendEvent.place = event.place;
+    this.sendEvent.eventType = event.eventType;
+    this.sendEvent.normalTicketPrice = event.normalTicketPrice;
+    this.sendEvent.discountTicketPrice = event.discountTicketPrice;
     console.log(this.sendEvent);
     console.log(JSON.stringify(this.eventService.addEvent(this.sendEvent)));
     this.sendEvent = null;
     this.clearForm();
+    this.pageShowed('read', null);
   }
 
   updateEvent(event: Event) {
-    this.sendEvent.id = this.id;
-    this.sendEvent.name = this.name;
-    this.sendEvent.description = this.description;
-    this.sendEvent.ticketsAvailable = this.ticketsAvailable;
-    this.sendEvent.ticketsTotal = this.ticketsTotal;
-    this.sendEvent.date = this.date;
-    this.sendEvent.place = this.place;
-    this.sendEvent.eventType = this.eventType;
-    this.sendEvent.normalTicketPrice = this.normalTicketPrice;
-    this.sendEvent.discountTicketPrice = this.discountTicketPrice;
-    console.log(this.eventService.updateEvent(this.sendEvent));
+    this.eventEdit.name = event.name;
+    this.eventEdit.description = event.description;
+    this.eventEdit.ticketsAvailable = event.ticketsAvailable;
+    this.eventEdit.ticketsTotal = event.ticketsTotal;
+    this.eventEdit.date = event.date;
+    this.eventEdit.place = event.place;
+    this.eventEdit.eventType = event.eventType;
+    this.eventEdit.normalTicketPrice = event.normalTicketPrice;
+    this.eventEdit.discountTicketPrice = event.discountTicketPrice;
+    console.log(this.eventService.updateEvent(this.eventEdit));
+    this.clearForm();
+    this.eventEdit = null;
     this.pageShowed('read', null);
   }
 

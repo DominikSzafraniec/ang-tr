@@ -1,13 +1,12 @@
 <mat-card class="example-card">
-  <div *ngIf="role=='admin'|| role=='user'">
-    <button  mat-button (click)="logoutFunc()" color="primary">Wyloguj</button>
-  </div>
-  <div *ngIf="role!='admin'&& role!='user'">
   <mat-card-header>
+    <div *ngIf="role!='admin'&& role!='user'">
     <mat-card-title>Zaloguj się</mat-card-title>
+    </div>
   </mat-card-header>
   <mat-card-content>
     <form class="example-form">
+      <div *ngIf="role!='admin'&& role!='user'">
       <table class="example-full-width" cellspacing="0">
         <tr>
           <td>
@@ -26,10 +25,15 @@
           </td>
         </tr>
       </table>
+    </div>
     </form>
   </mat-card-content>
   <mat-card-actions>
+    <div *ngIf="role!='admin'&& role!='user'">
       <button mat-raised-button (click)="loginFunc()" color="primary">Zaloguj</button>
+    </div>
   </mat-card-actions>
+  <div *ngIf="role=='admin'|| role=='user'">
+    <button  mat-button (click)="logoutFunc()" color="primary">Wyloguj</button>
   </div>
 </mat-card>

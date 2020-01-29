@@ -12,7 +12,6 @@ import {User} from '../../model/User';
 export class LoginComponent implements OnInit {
 
   constructor(private loginService: LoginService, private  router: Router, private _formBuilder: FormBuilder) {
-    this.role = localStorage.getItem('loggedUser');
   }
   user: User;
   login: string;
@@ -34,7 +33,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.user = new User();
-    this.role = localStorage.getItem('loggedUser');
+    this.role = (JSON.parse(localStorage.getItem('loggedUser'))).role;
   }
 
 }
