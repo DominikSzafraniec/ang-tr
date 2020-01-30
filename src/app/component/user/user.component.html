@@ -1,7 +1,7 @@
 <div *ngIf="roleStorage=='user'">
   <button mat-raised-button color="primary" (click)="getUserById()" > Załąduj dane użytkownika</button>
   <mat-form-field>
-    <input disabled="true" matInput placeholder="Wpisz nazwę użytkownika" formControlName="username" >
+    <input disabled="true" matInput placeholder="{{userEdit.username}}" formControlName="username" >
   </mat-form-field>
   <form [formGroup]="firstFormGroup">
     <table>
@@ -11,21 +11,22 @@
         <td>Nazwisko</td>
         <td>Adres</td>
         <td>NumerTelefonu</td>
+
       </tr>
       <tr>
         <td>
           <mat-form-field>
-            <input matInput placeholder="" formControlName="password" >
+            <input matInput placeholder="wpisz nowe hasło" formControlName="password" >
           </mat-form-field>
         </td>
         <td>
           <mat-form-field>
-            <input matInput placeholder="{{userEdit.firstName}}" formControlName="firstName" >
+            <input matInput placeholder="{{userEdit.firstName}}" value="{{userEdit.firstName}}" formControlName="firstName" >
           </mat-form-field>
         </td>
         <td>
           <mat-form-field>
-            <input matInput placeholder="{{userEdit.familyName}}" formControlName="familyName" >
+            <input matInput placeholder="{{userEdit.familyName}}" placeholder="{{userEdit.familyName}}" formControlName="familyName" >
           </mat-form-field>
         </td>
         <td>

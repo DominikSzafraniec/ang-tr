@@ -48,6 +48,7 @@ export class EventComponent implements OnInit {
       normalTicketPrice: event.normalTicketPrice,
       discountTicketPrice: event.discountTicketPrice
     });
+      this.pageShowed('read', null);
   }
   addEvent(event: Event): void {
     this.sendEvent.id = null;
@@ -125,6 +126,6 @@ export class EventComponent implements OnInit {
       normalTicketPrice: 0,
       discountTicketPrice: 0
     });
+    this.pageShowed('read', null);
   }
-
 }

@@ -37,10 +37,12 @@ export class UserComponent implements OnInit {
     getUserById() {
         this.userService.getUserById((JSON.parse(localStorage.getItem('loggedUser'))).id).subscribe(users => {
         this.users = users;
-        this.pageShowed('read', null);
       });
+      this.editUser(this.users.filter(us => us.id === (JSON.parse(localStorage.getItem('loggedUser'))).id)[0]);
+      this.pageShowed('read', null);
     }
     editUser(user: User) {
+      console.log(user);
       this.userEdit = user;
       this.firstFormGroup = this._formBuilder.group({
         id: user.id,
@@ -71,7 +73,11 @@ export class UserComponent implements OnInit {
 
   updateUser(user: User) {
     this.userEdit.username = user.username;
-    this.userEdit.role = user.role;
+    if (user.role != null) {
+      this.userEdit.role = user.role;
+    } else {
+      this.userEdit.role = (JSON.parse(localStorage.getItem('loggedUser'))).role;
+    }
     this.userEdit.password = user.password;
     this.userEdit.firstName = user.firstName;
     this.userEdit.familyName = user.familyName;
@@ -121,6 +127,7 @@ export class UserComponent implements OnInit {
       address: [''],
       phoneNumber: 0
     });
+    this.pageShowed('read', null);
   }
 
 }
