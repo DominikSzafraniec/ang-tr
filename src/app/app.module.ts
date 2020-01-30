@@ -13,13 +13,16 @@ import {LoginComponent} from './component/login/login.component';
 import {LoginService} from './services/LoginService';
 import {UserComponent} from './component/user/user.component';
 import {UserService} from './services/UsersService';
+import {ReservationComponent} from './component/reservation/reservation.component';
+import {ReservationsService} from './services/ReservationsService';
 
 @NgModule({
   declarations: [
     AppComponent,
     EventComponent,
     UserComponent,
-    LoginComponent
+    LoginComponent,
+    ReservationComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,10 @@ import {UserService} from './services/UsersService';
         component: UserComponent
       },
       {
+        path: 'reservations',
+        component: ReservationComponent
+      },
+      {
         path: '',
         component: LoginComponent
       }
@@ -53,7 +60,8 @@ import {UserService} from './services/UsersService';
   providers: [
     EventService,
     UserService,
-    LoginService
+    LoginService,
+    ReservationsService
   ],
   bootstrap: [AppComponent]
 })

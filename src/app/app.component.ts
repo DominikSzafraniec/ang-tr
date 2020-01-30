@@ -21,6 +21,9 @@ export class AppComponent implements OnInit {
   usersPage(): void {
     this.router.navigateByUrl('/users');
   }
+  reservationsPage(): void {
+    this.router.navigateByUrl('/reservations');
+  }
 
   ngOnInit() {
     this.myDisabled = false;

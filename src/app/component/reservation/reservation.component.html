@@ -1,0 +1,115 @@
+<div *ngIf="roleStorage=='admin'">
+  <table>
+    <td>
+      <button mat-raised-button color="primary" (click)="pageShowed('read',null)">Wyswietl rezerwacje</button>
+    </td>
+  </table>
+
+  <div *ngIf="showReservationPage=='read'">
+
+    <table >
+      <tr>
+        <td>Nr rezerwacji</td>
+        <td>Nr biletów</td>
+        <td>Seanse</td>
+      </tr>
+      <tr *ngFor="let d of reservations">
+        <td>{{d.id}}</td>
+        <td >
+          <div *ngFor="let t of d.tickets">{{t.id}}}</div>
+        </td>
+        <td>
+          <div *ngFor="let t of d.tickets">{{t.event.name}}}</div>
+        </td>
+        <td>
+          <button mat-raised-button color="primary" (click)="deleteReservation(d.id)"> Usun</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div *ngIf="roleStorage=='user'">
+  <table>
+    <td>
+      <button mat-raised-button color="primary" (click)="pageShowed('read',null)">Wyswietl rezerwacje</button>
+    </td>
+    <td>
+      <button mat-raised-button color="primary" (click)="addReservation(sendReservation)">Dodaj rezerwacje</button>
+    </td>
+    <td>
+      <button mat-raised-button color="primary" (click)="pageShowed('read',null)">Zobacz rekomendacje</button>
+    </td>
+
+  </table>
+
+  <div *ngIf="showReservationPage=='read'">
+    <table >
+      <tr>
+        <td>Nr rezerwacji</td>
+        <td>Nr biletów</td>
+        <td>Seanse</td>
+        <td>Miejsce</td>
+      </tr>
+      <tr *ngFor="let d of reservations">
+        <td>{{d.id}}</td>
+        <td >
+          <div *ngFor="let t of d.tickets">{{t.id}}}</div>
+        </td>
+        <td>
+          <div *ngFor="let t of d.tickets">{{t.event.name}}}</div>
+        </td>
+        <td>
+          <div *ngFor="let t of d.tickets">{{t.seat}}}</div>
+        </td>
+        <td>
+          <button mat-raised-button color="primary" (click)="deleteReservation(d.id)"> Usun</button>
+        </td>
+        <td>
+          <button mat-raised-button color="primary" (click)="pageShowed('edit',d)"> Edytuj</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+  <div *ngIf="showReservationPage=='add'">
+    <form [formGroup]="secoundFormGroup">
+
+      <mat-form-field>
+        <input matInput placeholder="{{sendReservation.id}}" formControlName="{{sendReservation.id}}" >
+      </mat-form-field>
+
+      <table>
+        <tr>
+          <td>Seans</td>
+          <td>Miejsce</td>
+          <td>Zniżka</td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="" formControlName="event" >
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="" formControlName="seats" >
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="" formControlName="discount" >
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+      <br>
+    </form>
+    <button mat-raised-button color="primary" (click)="addTicket(firstFormGroup.value)" > Dodaj seans</button>
+  </div>
+  <div *ngIf="showReservationPage=='edit'">
+    <form [formGroup]="firstFormGroup">
+    </form>
+  </div>
+</div>

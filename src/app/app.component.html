@@ -7,13 +7,14 @@
   </button>
 </mat-toolbar>
 
-<h1 align="center">System biletowy</h1>
+<h1 align="center">System rezerwacji biletów</h1>
 <br>
 
 <mat-menu #appMenu="matMenu">
   <button mat-menu-item (click)="startPage()"> Start</button>
-  <button mat-menu-item (click)="eventsPage()"> Events</button>
-  <button mat-menu-item (click)="usersPage()"> Users</button>
+  <button mat-menu-item (click)="eventsPage()"> Seanse</button>
+  <button mat-menu-item (click)="usersPage()"> Użytkownicy</button>
+  <button mat-menu-item (click)="reservationsPage()"> Rezerwacje</button>
 </mat-menu>
 
 <router-outlet></router-outlet>
