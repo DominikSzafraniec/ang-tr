@@ -11,11 +11,14 @@ import {EventService} from './services/EventsService';
 import {EventComponent} from './component/event/event.component';
 import {LoginComponent} from './component/login/login.component';
 import {LoginService} from './services/LoginService';
+import {UserComponent} from './component/user/user.component';
+import {UserService} from './services/UsersService';
 
 @NgModule({
   declarations: [
     AppComponent,
     EventComponent,
+    UserComponent,
     LoginComponent
   ],
   imports: [
@@ -38,6 +41,10 @@ import {LoginService} from './services/LoginService';
         component: EventComponent
       },
       {
+        path: 'users',
+        component: UserComponent
+      },
+      {
         path: '',
         component: LoginComponent
       }
@@ -45,6 +52,7 @@ import {LoginService} from './services/LoginService';
   ],
   providers: [
     EventService,
+    UserService,
     LoginService
   ],
   bootstrap: [AppComponent]

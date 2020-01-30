@@ -1,0 +1,198 @@
+<div *ngIf="roleStorage=='user'">
+  <button mat-raised-button color="primary" (click)="getUserById()" > Załąduj dane użytkownika</button>
+  <mat-form-field>
+    <input disabled="true" matInput placeholder="Wpisz nazwę użytkownika" formControlName="username" >
+  </mat-form-field>
+  <form [formGroup]="firstFormGroup">
+    <table>
+      <tr>
+        <td>Hasło</td>
+        <td>Imie</td>
+        <td>Nazwisko</td>
+        <td>Adres</td>
+        <td>NumerTelefonu</td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field>
+            <input matInput placeholder="" formControlName="password" >
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field>
+            <input matInput placeholder="{{userEdit.firstName}}" formControlName="firstName" >
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field>
+            <input matInput placeholder="{{userEdit.familyName}}" formControlName="familyName" >
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field>
+            <input matInput placeholder="{{userEdit.address}}" formControlName="address" >
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field>
+            <input matInput placeholder="{{userEdit.phoneNumber}}" formControlName="phoneNumber" >
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+    <br>
+  </form>
+  <button mat-raised-button color="primary" (click)="updateUser(firstFormGroup.value)" > Edytuj użytkownika</button>
+</div>
+
+<div *ngIf="roleStorage=='admin'">
+  <table>
+    <td>
+      <button mat-raised-button color="primary" (click)="pageShowed('read',null)">Wyswietl Użytkowników</button>
+    </td>
+    <td>
+      <button mat-raised-button color="primary" (click)="pageShowed('add',null)">Dodaj Użytkownika</button>
+    </td>
+  </table>
+
+  <div *ngIf="showUserPage=='read'">
+    <table>
+      <tr>
+        <td>Nazwa użytkownika</td>
+        <td>Typ użytkownika</td>
+        <td>Imie</td>
+        <td>Nazwisko</td>
+        <td>Adres</td>
+        <td>NumerTelefonu</td>
+      </tr>
+      <tr *ngFor="let d of users">
+        <td>{{d.username}}</td>
+        <td>{{d.role}}</td>
+        <td>{{d.firstName}}</td>
+        <td>{{d.familyName}}</td>
+        <td>{{d.address}}</td>
+        <td>{{d.phoneNumber}}</td>
+        <td>
+          <button mat-raised-button color="primary" (click)="deleteUser(d.id)"> Usun</button>
+        </td>
+        <td>
+          <button mat-raised-button color="primary" (click)="pageShowed('edit',d)"> Edytuj</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+  <div *ngIf="showUserPage=='add'">
+    <form [formGroup]="firstFormGroup">
+
+      <mat-form-field>
+        <input matInput placeholder="Wpisz nazwę użytkownika" formControlName="username" >
+      </mat-form-field>
+
+      <table>
+        <tr>
+          <td>Hasło</td>
+          <td>Typ użytkownika</td>
+          <td>Imie</td>
+          <td>Nazwisko</td>
+          <td>Adres</td>
+          <td>NumerTelefonu</td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="" formControlName="password" >
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-select formControlName="role">
+                <mat-option value="user" >Użytkownik</mat-option>
+                <mat-option value="admin">Administrator</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="" formControlName="firstName" >
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="" formControlName="familyName" >
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="" formControlName="address" >
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="" formControlName="phoneNumber" >
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+      <br>
+    </form>
+    <button mat-raised-button color="primary" (click)="addUser(firstFormGroup.value)" > Dodaj użytkownika</button>
+  </div>
+  <div *ngIf="showUserPage=='edit'">
+    <form [formGroup]="firstFormGroup">
+
+      <mat-form-field>
+        <input disabled="true" matInput placeholder="Wpisz nazwę użytkownika" formControlName="username" >
+      </mat-form-field>
+
+      <table>
+        <tr>
+          <td>Hasło</td>
+          <td>Typ użytkownika</td>
+          <td>Imie</td>
+          <td>Nazwisko</td>
+          <td>Adres</td>
+          <td>NumerTelefonu</td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="" formControlName="password" >
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-select formControlName="role" placeholder="{{userEdit.role}}">
+                <mat-option value="user" >Użytkownik</mat-option>
+                <mat-option value="admin">Administrator</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="{{userEdit.firstName}}" formControlName="firstName" >
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="{{userEdit.familyName}}" formControlName="familyName" >
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="{{userEdit.address}}" formControlName="address" >
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="{{userEdit.phoneNumber}}" formControlName="phoneNumber" >
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+      <br>
+    </form>
+    <button mat-raised-button color="primary" (click)="updateUser(firstFormGroup.value)" > Edytuj użytkownika</button>
+  </div>
+</div>

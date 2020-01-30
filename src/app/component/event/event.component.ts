@@ -3,8 +3,7 @@ import {Router} from '@angular/router';
 import {Event} from '../../model/Event';
 import {EventService} from '../../services/EventsService';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {forEach} from '@angular/router/src/utils/collection';
-import {of} from 'rxjs';
+
 
 @Component({
   selector: 'app-event',

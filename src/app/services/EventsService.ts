@@ -6,9 +6,6 @@ import {Event} from '../model/Event';
 
 @Injectable()
 export class EventService {
-
-  private selectedEvent: Event;
-
   constructor(public http: HttpClient, private router: Router) {
   }
 
