@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Reservation} from '../../model/Reservation';
 import {Ticket} from '../../model/Ticket';
+import {Event} from '../../model/Event';
 import {ReservationsService} from '../../services/ReservationsService';
 import {FormBuilder, FormGroup} from '@angular/forms';
 
@@ -14,12 +15,13 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 export class ReservationComponent implements OnInit {
 
   firstFormGroup: FormGroup;
-  secoundFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
   reservations: Array<Reservation> = [];
   sendReservation: Reservation;
   reservationEdit: Reservation;
   showReservationPage: string;
   searchReservations: Array<Reservation> = [];
+  searchEvent: Array<Event> = [];
   searchTickets: Array<Ticket> = [];
   roleStorage: string;
 
@@ -29,14 +31,14 @@ export class ReservationComponent implements OnInit {
 
   pageShowed(showedPage: string, reservation: Reservation) {
       if (showedPage === 'read') {
-        this.sendReservation.id = null;
+        this.sendReservation.id = 0;
       }
       if ( showedPage === 'edit') {
         this.showReservationPage = showedPage;
         this.editReservation(reservation);
       } else {
         this.showReservationPage = showedPage;
-        if (localStorage.getItem('role') === 'admin') {
+        if (this.roleStorage === 'admin') {
           this.reservationService.getAllReservations().subscribe(reservations => {
             this.reservations = reservations;
           });
@@ -55,13 +57,17 @@ export class ReservationComponent implements OnInit {
     });
       this.pageShowed('read', null);
   }
-  addReservation(reservation: Reservation): void {
+  addReservation(reservation: Reservation){
+    this.sendReservation.id = 0;
+    this.sendReservation.description = ' ';
+    this.sendReservation.tickets = new Array<Ticket>();
+    this.sendReservation.created = new Date;
     this.clearForm();
-    this.sendReservation.id = null;
-    this.sendReservation.description = reservation.description;
-    console.log(this.sendReservation);
-    this.sendReservation = this.reservationService.addReservation(this.sendReservation);
-    this.pageShowed('add', null);
+    this.sendReservation = JSON.parse(this.reservationService.addReservation(this.sendReservation));
+    this.reservationService.getEvents().subscribe(events => {
+      this.searchEvent = events;
+    });
+    this.pageShowed('add', this.sendReservation);
   }
   deleteReservation(id: number) {
     this.reservationService.deleteReservation(id).subscribe(reservations => {
@@ -86,7 +92,7 @@ export class ReservationComponent implements OnInit {
     });
   }
   clearForm2() {
-    this.secoundFormGroup = this._formBuilder.group({
+    this.secondFormGroup = this._formBuilder.group({
       id: null,
       event: [''],
       seat: [''],
@@ -94,11 +100,12 @@ export class ReservationComponent implements OnInit {
     });
   }
   addTicket(ticket: Ticket) {
-    this.sendTicket.id = null;
+    this.sendTicket.id = 0;
     this.sendTicket.seat = ticket.seat;
     this.sendTicket.discount = ticket.discount;
     this.sendTicket.event = ticket.event;
-    this.sendReservation.description = ticket.description;
+    console.log('dodawanie biletu');
+    console.log(this.sendTicket);
     console.log(this.sendReservation);
     console.log(JSON.stringify(this.reservationService.addTickets(this.sendTicket, this.sendReservation.id  )));
     this.sendTicket = null;
@@ -121,10 +128,12 @@ export class ReservationComponent implements OnInit {
       date: Date.now(),
 
     });
-    this.secoundFormGroup = this._formBuilder.group({
+    this.secondFormGroup = this._formBuilder.group({
       id: null,
+      seats: [''],
+      description: [''],
       event: [''],
-      seat: [''],
+
       discount: false
     });
     this.pageShowed('read', null);

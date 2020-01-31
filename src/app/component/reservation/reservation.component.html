@@ -74,11 +74,8 @@
 
 
   <div *ngIf="showReservationPage=='add'">
-    <form [formGroup]="secoundFormGroup">
-
-      <mat-form-field>
-        <input matInput placeholder="{{sendReservation.id}}" formControlName="{{sendReservation.id}}" >
-      </mat-form-field>
+    <form [formGroup]="secondFormGroup">
+      Dodawanie
 
       <table>
         <tr>
@@ -89,24 +86,28 @@
         <tr>
           <td>
             <mat-form-field>
-              <input matInput placeholder="" formControlName="event" >
+              <mat-select formControlName="event">
+                <mat-option *ngFor="let s of searchEvent" value="{{s}}" >{{s.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="1" formControlName="seat" >
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
-              <input matInput placeholder="" formControlName="seats" >
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field>
-              <input matInput placeholder="" formControlName="discount" >
+              <mat-select formControlName="discount">
+                <mat-option value="true" >Tak</mat-option>
+                <mat-option value="false">Nie</mat-option>
+              </mat-select>
             </mat-form-field>
           </td>
         </tr>
       </table>
       <br>
     </form>
-    <button mat-raised-button color="primary" (click)="addTicket(firstFormGroup.value)" > Dodaj seans</button>
+    <button mat-raised-button color="primary" (click)="addTicket(secondFormGroup.value)" > Dodaj seans</button>
   </div>
   <div *ngIf="showReservationPage=='edit'">
     <form [formGroup]="firstFormGroup">

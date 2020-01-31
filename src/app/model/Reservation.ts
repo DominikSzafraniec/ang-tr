@@ -1,4 +1,5 @@
 import {Ticket} from './Ticket';
+
 export class Reservation {
   id: number;
   description: string;
