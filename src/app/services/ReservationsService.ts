@@ -51,7 +51,6 @@ export class ReservationsService {
 
   addTickets(ticket: Ticket, idRes: number) {
     let addedTicket = null;
-    console.log(JSON.stringify(ticket));
     this.http.post('http://localhost:8080/users/' + (JSON.parse(localStorage.getItem('loggedUser'))).id + '/reservation/' + idRes + '/events/' + ticket.event.id, JSON.stringify(ticket),
       {
         headers: {'Content-Type': 'application/json'},
@@ -59,9 +58,6 @@ export class ReservationsService {
       }).subscribe(res => {
       addedTicket = (<Reservation>JSON.parse(res));
     });
-    console.log('debug');
-    console.log('debug');
-    return addedTicket;
   }
 
   deleteTicket(id: number, idEv: number, idT: number): Observable<Array<Ticket>> {

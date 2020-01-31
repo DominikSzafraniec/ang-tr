@@ -57,16 +57,18 @@ export class ReservationComponent implements OnInit {
     });
       this.pageShowed('read', null);
   }
-  addReservation(reservation: Reservation){
+  addReservation(reservation: Reservation) {
     this.sendReservation.id = 0;
     this.sendReservation.description = ' ';
     this.sendReservation.tickets = new Array<Ticket>();
     this.sendReservation.created = new Date;
-    this.clearForm();
+    console.log('reservation' + console.log(JSON.stringify(this.sendReservation)));
     this.sendReservation = JSON.parse(this.reservationService.addReservation(this.sendReservation));
     this.reservationService.getEvents().subscribe(events => {
       this.searchEvent = events;
     });
+    console.log('reservation2' + console.log(JSON.stringify(this.sendReservation)));
+    this.clearForm();
     this.pageShowed('add', this.sendReservation);
   }
   deleteReservation(id: number) {
@@ -93,9 +95,10 @@ export class ReservationComponent implements OnInit {
   }
   clearForm2() {
     this.secondFormGroup = this._formBuilder.group({
-      id: null,
+      id: 0,
+      seat: 0,
+      description: [''],
       event: [''],
-      seat: [''],
       discount: false
     });
   }
@@ -105,9 +108,8 @@ export class ReservationComponent implements OnInit {
     this.sendTicket.discount = ticket.discount;
     this.sendTicket.event = ticket.event;
     console.log('dodawanie biletu');
-    console.log(this.sendTicket);
-    console.log(this.sendReservation);
-    console.log(JSON.stringify(this.reservationService.addTickets(this.sendTicket, this.sendReservation.id  )));
+    console.log('ticket' + console.log(JSON.stringify(this.sendTicket)));
+    this.reservationService.addTickets(this.sendTicket, this.sendReservation.id  );
     this.sendTicket = null;
     this.clearForm2();
     this.pageShowed('add', this.sendReservation);
@@ -129,11 +131,10 @@ export class ReservationComponent implements OnInit {
 
     });
     this.secondFormGroup = this._formBuilder.group({
-      id: null,
-      seats: [''],
+      id: 0,
+      seat: 0,
       description: [''],
       event: [''],
-
       discount: false
     });
     this.pageShowed('read', null);
