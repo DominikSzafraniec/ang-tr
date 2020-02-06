@@ -22,6 +22,8 @@ export class ReservationComponent implements OnInit {
   showReservationPage: string;
   searchReservations: Array<Reservation> = [];
   searchEvent: Array<Event> = [];
+  events: Array<Event> = [];
+  events2: Array<Event> = [];
   searchTickets: Array<Ticket> = [];
   roleStorage: string;
 
@@ -36,6 +38,16 @@ export class ReservationComponent implements OnInit {
       if ( showedPage === 'edit') {
         this.showReservationPage = showedPage;
         this.editReservation(reservation);
+      } else if(showedPage === 'recomendation') {
+        this.showReservationPage = showedPage;
+        this.events = new Array<Event>();
+        this.reservationService.getRecomendationGenre().subscribe( recomend => {
+          this.events = recomend;
+          this.reservationService.getRecomendationPlace().subscribe( recomend2 => {
+            this.events2 = recomend2;
+
+          });
+        });
       } else {
         this.showReservationPage = showedPage;
         if (this.roleStorage === 'admin') {
@@ -48,7 +60,7 @@ export class ReservationComponent implements OnInit {
           });
         }
       }
-    }
+  }
     editReservation(reservation: Reservation) {
       this.reservationEdit = reservation;
       this.sendReservation = reservation;

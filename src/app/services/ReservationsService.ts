@@ -55,5 +55,10 @@ export class ReservationsService {
   deleteTicket(id: number, idEv: number, idT: number): Observable<Array<Ticket>> {
     return this.http.delete<Array<Ticket>>('http://localhost:8080/users/' + (JSON.parse(localStorage.getItem('loggedUser'))).id + '/reservations/' + id + '/events/' + idEv + '/tickets/' + idT);
   }
-
+  getRecomendationGenre(): Observable<Array<Event>>{
+    return this.http.get<Array<Event>>('http://localhost:8080/users/' + (JSON.parse(localStorage.getItem('loggedUser'))).id + '/genreRecommendations');
+  }
+  getRecomendationPlace(): Observable<Array <Event>>{
+    return this.http.get<Array<Event>>('http://localhost:8080/users/' + (JSON.parse(localStorage.getItem('loggedUser'))).id + '/placeRecommendations');
+  }
 }

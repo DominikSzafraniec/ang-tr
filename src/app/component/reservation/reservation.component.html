@@ -38,7 +38,7 @@
       <button mat-raised-button color="primary" (click)="addReservation(this.sendReservation)">Dodaj rezerwacje</button>
     </td>
     <td>
-      <button mat-raised-button color="primary" (click)="pageShowed('read',null)">Zobacz rekomendacje</button>
+      <button mat-raised-button color="primary" (click)="pageShowed('recomendation',null)">Zobacz rekomendacje</button>
     </td>
 
   </table>
@@ -72,7 +72,40 @@
     </table>
   </div>
 
-
+  <div *ngIf="showReservationPage=='recomendation'">
+    <table>
+      <tr>
+        <td>Seans</td>
+        <td>Opis</td>
+        <td>Dostepne bilety</td>
+        <td>Data</td>
+        <td>Miejsce seansu</td>
+        <td>Gatunek</td>
+        <td>Cena normalna</td>
+        <td>Cena ulgowa</td>
+      </tr>
+      <tr *ngFor="let dd of events">
+        <td>{{dd.name}}</td>
+        <td>{{dd.description}}</td>
+        <td>{{dd.ticketsAvailable}}</td>
+        <td>{{dd.date}}</td>
+        <td>{{dd.place}}</td>
+        <td>{{dd.eventType}}</td>
+        <td>{{dd.normalTicketPrice}}</td>
+        <td>{{dd.discountTicketPrice}}</td>
+      </tr>
+      <tr *ngFor="let dd2 of events2">
+        <td>{{dd2.name}}</td>
+        <td>{{dd2.description}}</td>
+        <td>{{dd2.ticketsAvailable}}</td>
+        <td>{{dd2.date}}</td>
+        <td>{{dd2.place}}</td>
+        <td>{{dd2.eventType}}</td>
+        <td>{{dd2.normalTicketPrice}}</td>
+        <td>{{dd2.discountTicketPrice}}</td>
+      </tr>
+    </table>
+  </div>
   <div *ngIf="showReservationPage=='add'">
     <form [formGroup]="secondFormGroup">
        Numer rezerwacji: {{sendReservation.id}}<br>
