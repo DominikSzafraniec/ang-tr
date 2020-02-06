@@ -75,13 +75,28 @@
 
   <div *ngIf="showReservationPage=='add'">
     <form [formGroup]="secondFormGroup">
-      Dodawanie
+       Numer rezerwacji: {{sendReservation.id}}<br>
 
       <table>
         <tr>
           <td>Seans</td>
           <td>Miejsce</td>
           <td>Zniżka</td>
+        </tr>
+        <tr *ngFor="let ti of searchTickets">
+          <td >
+            {{ti.event.name}}
+          </td>
+          <td>
+            {{ti.seat}}
+          </td>
+          <td>
+            <div *ngIf=" ti.discount ">tak</div>
+            <div *ngIf=" !ti.discount ">nie</div>
+          </td>
+          <td>
+            <button mat-raised-button color="primary" (click)="deleteTicket(ti)"> Usun</button>
+          </td>
         </tr>
         <tr>
           <td>

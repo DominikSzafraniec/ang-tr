@@ -59,7 +59,12 @@ export class ReservationComponent implements OnInit {
       this.reservationService.getEvents().subscribe(events => {
         this.searchEvent = events;
         this.clearForm();
-        this.pageShowed('add', null);
+        this.reservationService.getTickets(this.sendReservation.id).subscribe(
+          tic => {
+            this.searchTickets = tic;
+            this.clearForm2();
+            this.pageShowed('add', this.sendReservation);
+          });
       });
   }
   addReservation(reservation: Reservation) {
@@ -70,6 +75,7 @@ export class ReservationComponent implements OnInit {
         this.reservationService.getEvents().subscribe(events => {
           this.searchEvent = events;
           this.clearForm();
+          this.clearForm2();
           this.pageShowed('add', null);
         });
       });
@@ -84,7 +90,7 @@ export class ReservationComponent implements OnInit {
   deleteTicket(ticket: Ticket) {
     this.reservationService.deleteTicket(this.sendReservation.id, ticket.event.id, ticket.id).subscribe(tickets => {
       this.searchTickets = tickets;
-      this.pageShowed('read', null);
+      this.pageShowed('add', null);
     });
   }
 
