@@ -38,7 +38,7 @@ export class ReservationComponent implements OnInit {
       if ( showedPage === 'edit') {
         this.showReservationPage = showedPage;
         this.editReservation(reservation);
-      } else if(showedPage === 'recomendation') {
+      } else if ( showedPage === 'recomendation') {
         this.showReservationPage = showedPage;
         this.events = new Array<Event>();
         this.reservationService.getRecomendationGenre().subscribe( recomend => {
