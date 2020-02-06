@@ -25,6 +25,9 @@ export class UserComponent implements OnInit {
 
   pageShowed(showedPage: string, user: User) {
       if ( showedPage === 'edit') {
+        if (this.roleStorage === 'user') {
+          this.getUserById();
+        }
         this.showUserPage = showedPage;
         this.editUser(user);
       } else {
@@ -106,6 +109,18 @@ export class UserComponent implements OnInit {
       familyName: [''],
       address: [''],
       phoneNumber: 0
+    });
+  }
+  fillForm(user: User) {
+    this.firstFormGroup = this._formBuilder.group({
+      id: user.id,
+      username: user.username,
+      role: user.role,
+      password: user.password,
+      firstName: user.firstName,
+      familyName: user.familyName,
+      address: user.address,
+      phoneNumber: user.phoneNumber
     });
   }
 

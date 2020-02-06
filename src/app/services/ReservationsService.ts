@@ -5,12 +5,10 @@ import {Router} from '@angular/router';
 import {Reservation} from '../model/Reservation';
 import {Ticket} from '../model/Ticket';
 import {Event} from '../model/Event';
-import {JSONP_ERR_NO_CALLBACK} from '@angular/common/http/src/jsonp';
 
 
 @Injectable()
 export class ReservationsService {
-  private addedReservation: any;
   constructor(public http: HttpClient, private router: Router) {
   }
 
@@ -25,16 +23,12 @@ export class ReservationsService {
     return this.http.get<Array<Event>>('http://localhost:8080/events');
   }
 
-  addReservation(reservation: Reservation): string {
-    this.addedReservation = new Reservation();
-    this.http.post('http://localhost:8080/reservations/users/' + (JSON.parse(localStorage.getItem('loggedUser'))).id, JSON.stringify(reservation),
+  addReservation(reservation: Reservation): Observable<Array<Reservation>> {
+    return this.http.post<Array<Reservation>>('http://localhost:8080/reservations/users/' + (JSON.parse(localStorage.getItem('loggedUser'))).id, JSON.stringify(reservation),
       {
         headers: {'Content-Type': 'application/json'},
-        responseType: 'text'
-      }).subscribe(res => {
-        return res;
-    });
-    return null;
+        responseType: 'json'
+      });
   }
 
   deleteReservation(id: number): Observable<Array<Reservation>> {
@@ -43,21 +37,19 @@ export class ReservationsService {
 
 
   getTickets(idRes: number): Observable<Array<Ticket>> {
-    return this.http.get<Array<Ticket>>('http://localhost:8080/users/' + (JSON.parse(localStorage.getItem('loggedUser'))).id + '/reservations/' + idRes + 'tickets' );
+    return this.http.get<Array<Ticket>>('http://localhost:8080/users/' + (JSON.parse(localStorage.getItem('loggedUser'))).id + '/reservations/' + idRes + '/tickets' );
   }
 
 
 
 
-  addTickets(ticket: Ticket, idRes: number) {
-    let addedTicket = null;
-    this.http.post('http://localhost:8080/users/' + (JSON.parse(localStorage.getItem('loggedUser'))).id + '/reservation/' + idRes + '/events/' + ticket.event.id, JSON.stringify(ticket),
+  addTickets(ticket: Ticket, idRes: number): Observable<Array<Ticket>> {
+    console.log(JSON.stringify(ticket.event));
+    return this.http.post<Array<Ticket>>('http://localhost:8080/users/' + (JSON.parse(localStorage.getItem('loggedUser'))).id + '/reservations/' + idRes + '/events/' + ticket.event.id + '/tickets', JSON.stringify(ticket),
       {
         headers: {'Content-Type': 'application/json'},
-        responseType: 'text'
-      }).subscribe(res => {
-      addedTicket = (<Reservation>JSON.parse(res));
-    });
+        responseType: 'json'
+      });
   }
 
   deleteTicket(id: number, idEv: number, idT: number): Observable<Array<Ticket>> {

@@ -16,10 +16,10 @@
       <tr *ngFor="let d of reservations">
         <td>{{d.id}}</td>
         <td >
-          <div *ngFor="let t of d.tickets">{{t.id}}}</div>
+          <div *ngFor="let t of d.tickets">{{t.id}}</div>
         </td>
         <td>
-          <div *ngFor="let t of d.tickets">{{t.event.name}}}</div>
+          <div *ngFor="let t of d.tickets">{{t.event.name}}</div>
         </td>
         <td>
           <button mat-raised-button color="primary" (click)="deleteReservation(d.id)"> Usun</button>
@@ -35,7 +35,7 @@
       <button mat-raised-button color="primary" (click)="pageShowed('read',null)">Wyswietl rezerwacje</button>
     </td>
     <td>
-      <button mat-raised-button color="primary" (click)="addReservation(sendReservation)">Dodaj rezerwacje</button>
+      <button mat-raised-button color="primary" (click)="addReservation(this.sendReservation)">Dodaj rezerwacje</button>
     </td>
     <td>
       <button mat-raised-button color="primary" (click)="pageShowed('read',null)">Zobacz rekomendacje</button>
@@ -54,19 +54,19 @@
       <tr *ngFor="let d of reservations">
         <td>{{d.id}}</td>
         <td >
-          <div *ngFor="let t of d.tickets">{{t.id}}}</div>
+          <div *ngFor="let t of d.tickets">{{t.id}}</div>
         </td>
         <td>
-          <div *ngFor="let t of d.tickets">{{t.event.name}}}</div>
+          <div *ngFor="let t of d.tickets">{{t.event.name}}</div>
         </td>
         <td>
-          <div *ngFor="let t of d.tickets">{{t.seat}}}</div>
+          <div *ngFor="let t of d.tickets">{{t.seat}}</div>
         </td>
         <td>
           <button mat-raised-button color="primary" (click)="deleteReservation(d.id)"> Usun</button>
         </td>
         <td>
-          <button mat-raised-button color="primary" (click)="pageShowed('edit',d)"> Edytuj</button>
+          <button mat-raised-button color="primary" (click)="editReservation(d)"> Edytuj</button>
         </td>
       </tr>
     </table>
@@ -86,8 +86,8 @@
         <tr>
           <td>
             <mat-form-field>
-              <mat-select formControlName="event">
-                <mat-option *ngFor="let s of searchEvent" value="{{s}}" >{{s.name}}</mat-option>
+              <mat-select formControlName="id">
+                <mat-option *ngFor="let s of searchEvent" value="{{s.id}}" >{{s.name}}</mat-option>
               </mat-select>
             </mat-form-field>
           <td>

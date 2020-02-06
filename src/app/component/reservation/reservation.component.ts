@@ -5,6 +5,7 @@ import {Ticket} from '../../model/Ticket';
 import {Event} from '../../model/Event';
 import {ReservationsService} from '../../services/ReservationsService';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {parseIntAutoRadix} from '@angular/common/src/i18n/format_number';
 
 
 @Component({
@@ -13,11 +14,10 @@ import {FormBuilder, FormGroup} from '@angular/forms';
   styleUrls: ['./reservation.component.scss']
 })
 export class ReservationComponent implements OnInit {
-
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   reservations: Array<Reservation> = [];
-  sendReservation: Reservation;
+  public sendReservation: Reservation;
   reservationEdit: Reservation;
   showReservationPage: string;
   searchReservations: Array<Reservation> = [];
@@ -51,38 +51,41 @@ export class ReservationComponent implements OnInit {
     }
     editReservation(reservation: Reservation) {
       this.reservationEdit = reservation;
+      this.sendReservation = reservation;
       this.firstFormGroup = this._formBuilder.group({
       id: reservation.id,
       description: reservation.description,
     });
-      this.pageShowed('read', null);
+      this.reservationService.getEvents().subscribe(events => {
+        this.searchEvent = events;
+        this.clearForm();
+        this.pageShowed('add', null);
+      });
   }
   addReservation(reservation: Reservation) {
-    this.sendReservation.id = 0;
-    this.sendReservation.description = ' ';
-    this.sendReservation.tickets = new Array<Ticket>();
-    this.sendReservation.created = new Date;
-    console.log('reservation' + console.log(JSON.stringify(this.sendReservation)));
-    this.sendReservation = JSON.parse(this.reservationService.addReservation(this.sendReservation));
-    this.reservationService.getEvents().subscribe(events => {
-      this.searchEvent = events;
-    });
-    console.log('reservation2' + console.log(JSON.stringify(this.sendReservation)));
-    this.clearForm();
-    this.pageShowed('add', this.sendReservation);
+    this.reservationService.addReservation(reservation).subscribe(
+      reservations => {
+        this.searchReservations = reservations;
+        this.sendReservation = JSON.parse(JSON.stringify(this.searchReservations));
+        this.reservationService.getEvents().subscribe(events => {
+          this.searchEvent = events;
+          this.clearForm();
+          this.pageShowed('add', null);
+        });
+      });
   }
   deleteReservation(id: number) {
     this.reservationService.deleteReservation(id).subscribe(reservations => {
       this.searchReservations = reservations;
+      this.pageShowed('read', null);
     });
-    this.pageShowed('read', null);
   }
 
   deleteTicket(ticket: Ticket) {
     this.reservationService.deleteTicket(this.sendReservation.id, ticket.event.id, ticket.id).subscribe(tickets => {
       this.searchTickets = tickets;
+      this.pageShowed('read', null);
     });
-    this.pageShowed('read', null);
   }
 
   clearForm() {
@@ -98,7 +101,7 @@ export class ReservationComponent implements OnInit {
       id: 0,
       seat: 0,
       description: [''],
-      event: [''],
+      event: new Event,
       discount: false
     });
   }
@@ -106,13 +109,17 @@ export class ReservationComponent implements OnInit {
     this.sendTicket.id = 0;
     this.sendTicket.seat = ticket.seat;
     this.sendTicket.discount = ticket.discount;
-    this.sendTicket.event = ticket.event;
-    console.log('dodawanie biletu');
-    console.log('ticket' + console.log(JSON.stringify(this.sendTicket)));
-    this.reservationService.addTickets(this.sendTicket, this.sendReservation.id  );
-    this.sendTicket = null;
-    this.clearForm2();
-    this.pageShowed('add', this.sendReservation);
+    this.sendTicket.event = new Event();
+    this.sendTicket.event.id =  ticket.id;
+    this.reservationService.addTickets(this.sendTicket, this.sendReservation.id).subscribe(res => {
+    this.sendTicket = new Ticket();
+      this.reservationService.getTickets(this.sendReservation.id).subscribe(
+        tic => {
+          this.searchTickets = tic;
+          this.clearForm2();
+          this.pageShowed('add', this.sendReservation);
+        });
+  });
   }
 
   ngOnInit() {
@@ -127,14 +134,13 @@ export class ReservationComponent implements OnInit {
       id: 0,
       description: [''],
       tickets: [''],
-      date: Date.now(),
-
+      date: Date.now()
     });
     this.secondFormGroup = this._formBuilder.group({
       id: 0,
       seat: 0,
       description: [''],
-      event: [''],
+      event: new Event,
       discount: false
     });
     this.pageShowed('read', null);
