@@ -18,32 +18,23 @@ export class EventService {
 
 
 
-  addEvent(event: Event) {
-    let addedEvent = null;
-    console.log(JSON.stringify(event));
-    this.http.post('http://localhost:8080/events', JSON.stringify(event),
+  addEvent(event: Event): Observable<Array<Event>> {
+    return this.http.post<Array<Event>>('http://localhost:8080/events', JSON.stringify(event),
       {
         headers: {'Content-Type': 'application/json'},
-        responseType: 'text'
-      }).subscribe(res => {
-      addedEvent = (<Event>JSON.parse(res));
-    });
-    return addedEvent;
+        responseType: 'json'
+      });
   }
 
   deleteEvent(id: number): Observable<Array<Event>> {
     return this.http.delete<Array<Event>>('http://localhost:8080/events/' + id);
   }
 
-  updateEvent(event: Event) {
-    let update = true;
-    this.http.put('http://localhost:8080/events/' + event.id, JSON.stringify(event),
+  updateEvent(event: Event): Observable<Array<Event>> {
+    return this.http.put<Array<Event>>('http://localhost:8080/events/' + event.id, JSON.stringify(event),
       {
         headers: {'Content-Type': 'application/json'},
-        responseType: 'text'
-      }).subscribe(res => {
-      update = (res === 'true');
-    });
-    return update;
+        responseType: 'json'
+      });
   }
 }

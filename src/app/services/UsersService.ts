@@ -20,32 +20,23 @@ export class UserService {
 
 
 
-  addUser(user: User) {
-    let addedUser = null;
-    console.log(JSON.stringify(user));
-    this.http.post('http://localhost:8080/users', JSON.stringify(user),
+  addUser(user: User): Observable<Array<User>> {
+    return this.http.post<Array<User>>('http://localhost:8080/users', JSON.stringify(user),
       {
         headers: {'Content-Type': 'application/json'},
-        responseType: 'text'
-      }).subscribe(res => {
-      addedUser = (<Event>JSON.parse(res));
-    });
-    return addedUser;
+        responseType: 'json'
+      });
   }
 
   deleteUser(id: number): Observable<Array<User>> {
     return this.http.delete<Array<User>>('http://localhost:8080/users/' + id);
   }
 
-  updateUser(user: User) {
-    let update = true;
-    this.http.put('http://localhost:8080/users/' + user.id, JSON.stringify(user),
+  updateUser(user: User): Observable<Array<User>> {
+    return this.http.put<Array<User>>('http://localhost:8080/users/' + user.id, JSON.stringify(user),
       {
         headers: {'Content-Type': 'application/json'},
-        responseType: 'text'
-      }).subscribe(res => {
-      update = (res === 'true');
-    });
-    return update;
+        responseType: 'json'
+      });
   }
 }

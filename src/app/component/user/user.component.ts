@@ -37,12 +37,13 @@ export class UserComponent implements OnInit {
         });
       }
     }
+
     getUserById() {
         this.userService.getUserById((JSON.parse(localStorage.getItem('loggedUser'))).id).subscribe(users => {
         this.users = users;
+        this.editUser(JSON.parse(JSON.stringify(users)));
+        this.pageShowed('read', null);
       });
-      this.editUser(this.users.filter(us => us.id === (JSON.parse(localStorage.getItem('loggedUser'))).id)[0]);
-      this.pageShowed('read', null);
     }
     editUser(user: User) {
       console.log(user);
@@ -67,11 +68,11 @@ export class UserComponent implements OnInit {
       this.sendUser.familyName = user.familyName;
       this.sendUser.address = user.address;
       this.sendUser.phoneNumber = user.phoneNumber;
-      console.log(this.sendUser);
-      console.log(JSON.stringify(this.userService.addUser(this.sendUser)));
-      this.sendUser = null;
-      this.clearForm();
-      this.pageShowed('read', null);
+      this.userService.addUser(this.sendUser).subscribe(res => {
+        this.sendUser = null;
+        this.clearForm();
+        this.pageShowed('read', null);
+      });
   }
 
   updateUser(user: User) {
@@ -86,17 +87,18 @@ export class UserComponent implements OnInit {
     this.userEdit.familyName = user.familyName;
     this.userEdit.address = user.address;
     this.userEdit.phoneNumber = user.phoneNumber;
-    console.log(this.userService.updateUser(this.userEdit));
-    this.clearForm();
-    this.userEdit = null;
-    this.pageShowed('read', null);
+    this.userService.updateUser(this.userEdit).subscribe(res => {
+      this.clearForm();
+      this.userEdit = null;
+      this.pageShowed('edit', null);
+    });
   }
 
   deleteUser(id: number) {
-    this.userService.deleteUser(id).subscribe(users => {
+      this.userService.deleteUser(id).subscribe(users => {
       this.searchUsers = users;
+      this.pageShowed('read', null);
     });
-    this.pageShowed('read', null);
   }
 
   clearForm() {
@@ -111,20 +113,6 @@ export class UserComponent implements OnInit {
       phoneNumber: 0
     });
   }
-  fillForm(user: User) {
-    this.firstFormGroup = this._formBuilder.group({
-      id: user.id,
-      username: user.username,
-      role: user.role,
-      password: user.password,
-      firstName: user.firstName,
-      familyName: user.familyName,
-      address: user.address,
-      phoneNumber: user.phoneNumber
-    });
-  }
-
-
   ngOnInit() {
     this.sendUser = new User();
     this.roleStorage = (JSON.parse(localStorage.getItem('loggedUser'))).role;
@@ -142,7 +130,11 @@ export class UserComponent implements OnInit {
       address: [''],
       phoneNumber: 0
     });
-    this.pageShowed('read', null);
+    if ( localStorage.role === 'user') {
+      this.pageShowed('edit', null);
+    } else {
+      this.pageShowed('read', null);
+    }
   }
 
 }

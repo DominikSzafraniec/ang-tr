@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {Event} from '../../model/Event';
 import {EventService} from '../../services/EventsService';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {consoleTestResultHandler} from 'tslint/lib/test';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class EventComponent implements OnInit {
   }
 
   pageShowed(showedPage: string, event: Event) {
-      if ( showedPage === 'edit') {
+      if ( showedPage === 'edit2') {
         this.showEventPage = showedPage;
         this.editEvent(event);
       } else {
@@ -48,7 +49,7 @@ export class EventComponent implements OnInit {
       normalTicketPrice: event.normalTicketPrice,
       discountTicketPrice: event.discountTicketPrice
     });
-      this.pageShowed('read', null);
+      this.pageShowed('edit', null);
   }
   addEvent(event: Event): void {
     this.sendEvent.id = null;
@@ -61,11 +62,11 @@ export class EventComponent implements OnInit {
     this.sendEvent.eventType = event.eventType;
     this.sendEvent.normalTicketPrice = event.normalTicketPrice;
     this.sendEvent.discountTicketPrice = event.discountTicketPrice;
-    console.log(this.sendEvent);
-    console.log(JSON.stringify(this.eventService.addEvent(this.sendEvent)));
-    this.sendEvent = null;
-    this.clearForm();
-    this.pageShowed('read', null);
+    this.eventService.addEvent(this.sendEvent).subscribe(res => {
+      this.sendEvent = new Event();
+      this.clearForm();
+      this.pageShowed('read', null);
+    });
   }
 
   updateEvent(event: Event) {
@@ -78,17 +79,18 @@ export class EventComponent implements OnInit {
     this.eventEdit.eventType = event.eventType;
     this.eventEdit.normalTicketPrice = event.normalTicketPrice;
     this.eventEdit.discountTicketPrice = event.discountTicketPrice;
-    console.log(this.eventService.updateEvent(this.eventEdit));
-    this.clearForm();
-    this.eventEdit = null;
-    this.pageShowed('read', null);
+    this.eventService.updateEvent(this.eventEdit).subscribe(res => {
+      this.clearForm();
+      this.eventEdit = new Event();
+      this.pageShowed('read', null);
+    });
   }
 
   deleteEvent(id: number) {
     this.eventService.deleteEvent(id).subscribe(events => {
       this.searchEvents = events;
+      this.pageShowed('read', null);
     });
-    this.pageShowed('read', null);
   }
 
   clearForm() {
